@@ -640,11 +640,11 @@ public class DrawerController: UIViewController, UIGestureRecognizerDelegate {
     // MARK: - Helpers
     
     private func setupGestureRecognizers() {
-        let pan = UIPanGestureRecognizer(target: self, action: "panGestureCallback:")
+        let pan = UIPanGestureRecognizer(target: self, action: #selector(DrawerController.panGestureCallback(_:)))
         pan.delegate = self
         self.view.addGestureRecognizer(pan)
         
-        let tap = UITapGestureRecognizer(target: self, action: "tapGestureCallback:")
+        let tap = UITapGestureRecognizer(target: self, action: #selector(DrawerController.tapGestureCallback(_:)))
         tap.delegate = self
         self.view.addGestureRecognizer(tap)
     }
@@ -911,7 +911,10 @@ public class DrawerController: UIViewController, UIGestureRecognizerDelegate {
     - parameter completion: The block called when the animation is finsihed.
     
     */
-    public func setCenterViewController(newCenterViewController: UIViewController, var withCloseAnimation animated: Bool, completion: ((Bool) -> Void)?) {
+    public func setCenterViewController(newCenterViewController: UIViewController, withCloseAnimation animated: Bool, completion: ((Bool) -> Void)?) {
+        
+        var animated = animated
+        
         if self.openSide == .None {
             // If a side drawer isn't open, there is nothing to animate
             animated = false
